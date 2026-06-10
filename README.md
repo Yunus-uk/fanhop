@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚽ FanHop
 
-## Getting Started
+**The fan city companion for the 2026 soccer tournament in the USA, Canada & Mexico.**
 
-First, run the development server:
+FanHop is for fans hopping between the 16 host cities: how to reach each stadium, the match schedule with kickoff-time weather, what to eat, and what to do between matches. It's deliberately *not* another live-scores app — the differentiator is the multi-city travel and logistics layer.
+
+> FanHop is an independent fan project, not affiliated with or endorsed by FIFA.
+
+## Features
+
+- **16 host city guides** — stadium directions with real transit info, local food picks, and things to do between matches
+- **Match schedule per city** — all 104 fixtures with accurate kickoff times in each city's local timezone; knockout teams and scores fill in automatically as the tournament progresses
+- **Kickoff-time weather** — live conditions per city, plus the hourly forecast *at kickoff* for upcoming matches (16-day window)
+- **Installable PWA** — add to home screen, works like an app, no store download needed
+
+## Stack
+
+- [Next.js 15](https://nextjs.org) (App Router, static generation + ISR) · React 19 · Tailwind CSS v4 · TypeScript
+- **Weather:** [Open-Meteo](https://open-meteo.com/) — free, no API key, revalidated every 30 min
+- **Fixtures:** [openfootball/worldcup.json](https://github.com/openfootball/worldcup.json) — public domain, revalidated hourly, with a bundled snapshot fallback (`src/data/fixtures-snapshot.json`)
+- No API keys or environment variables required
+
+## Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # production build (21 static pages)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Key files:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Path | Purpose |
+|---|---|
+| `src/data/cities.ts` | All 16 host cities: stadium, transit, food, activities |
+| `src/lib/fixtures.ts` | Fixture fetching/parsing + venue→city mapping |
+| `src/lib/weather.ts` | Current weather + hourly kickoff forecasts |
+| `src/app/city/[id]/page.tsx` | City detail page |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed on [Vercel](https://vercel.com) — every push to `main` auto-deploys.
