@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { CITIES, getCity } from "@/data/cities";
-import { getWeather, localTime } from "@/lib/weather";
+import { getWeather, getHourlyWeather, localTime } from "@/lib/weather";
+import { getCityFixtures, fixtureDate, fixtureTime } from "@/lib/fixtures";
 
 export function generateStaticParams() {
   return CITIES.map((c) => ({ id: c.id }));
@@ -50,6 +51,9 @@ export default async function CityPage({
 
   const weather = await getWeather(city.lat, city.lng);
   const time = localTime(city.timezone);
+  const fixtures = await getCityFixtures(city.id);
+  const forecastAt = await getHourlyWeather(city.lat, city.lng);
+  const now = Date.now();
 
   return (
     <div>
@@ -97,6 +101,56 @@ export default async function CityPage({
           <p className="mt-2 text-sm text-white/80">{city.gettingThere}</p>
         </div>
       </Section>
+
+      {fixtures.length > 0 && (
+        <Section title={`📅 Matches at ${city.stadium}`}>
+          <div className="card divide-y divide-white/5 rounded-2xl">
+            {fixtures.map((f) => {
+              const played = f.kickoffUtc.getTime() < now;
+              const kickoffWx = !played && forecastAt ? forecastAt(f.kickoffUtc) : null;
+              return (
+                <div
+                  key={`${f.kickoffUtc.toISOString()}-${f.team1}`}
+                  className={`flex items-center gap-3 p-3 sm:p-4 ${played && !f.score ? "opacity-50" : ""}`}
+                >
+                  <div className="w-20 shrink-0 text-xs text-white/50">
+                    <div className="font-semibold text-white/70">
+                      {fixtureDate(f.kickoffUtc, city.timezone)}
+                    </div>
+                    <div>{fixtureTime(f.kickoffUtc, city.timezone)}</div>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-semibold">
+                      {f.team1} <span className="font-normal text-white/40">vs</span> {f.team2}
+                    </p>
+                    <p className="text-xs text-white/40">
+                      {f.group ?? f.round}
+                    </p>
+                  </div>
+                  {f.score && (
+                    <div className="shrink-0 rounded-lg bg-white/10 px-2 py-1 text-sm font-bold">
+                      {f.score}
+                    </div>
+                  )}
+                  {kickoffWx && (
+                    <div
+                      className="shrink-0 text-right text-xs text-white/60"
+                      title={`Forecast at kickoff: ${kickoffWx.label}`}
+                    >
+                      <span className="text-base">{kickoffWx.emoji}</span>{" "}
+                      {kickoffWx.tempC}°C
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <p className="mt-2 text-xs text-white/30">
+            Kickoff times shown in {city.name} local time. Weather chips are the
+            forecast at kickoff (next 16 days).
+          </p>
+        </Section>
+      )}
 
       <Section title="🍔 What to eat">
         <div className="grid gap-3 sm:grid-cols-2">

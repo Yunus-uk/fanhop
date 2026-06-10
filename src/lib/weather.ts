@@ -65,6 +65,47 @@ export async function getWeather(lat: number, lng: number): Promise<Weather | nu
   }
 }
 
+// Hourly forecast lookup for kickoff-time weather. Open-Meteo serves up to
+// 16 days of hourly data; returns a function mapping an instant -> Weather,
+// or null for kickoffs outside the forecast window.
+export async function getHourlyWeather(
+  lat: number,
+  lng: number,
+): Promise<((at: Date) => Weather | null) | null> {
+  try {
+    const url =
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}` +
+      `&hourly=temperature_2m,weather_code,is_day&forecast_days=16` +
+      `&temperature_unit=celsius&timeformat=unixtime&timezone=UTC`;
+    const res = await fetch(url, { next: { revalidate: 1800 } });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const h = data.hourly;
+    if (!h?.time?.length) return null;
+    const times: number[] = h.time; // unix seconds, hourly steps
+    return (at: Date) => {
+      const idx = Math.round((at.getTime() / 1000 - times[0]) / 3600);
+      if (idx < 0 || idx >= times.length) return null;
+      const temp = h.temperature_2m?.[idx];
+      const code = h.weather_code?.[idx];
+      if (temp == null || code == null) return null;
+      const tempC = Math.round(temp);
+      const isDay = h.is_day?.[idx] === 1;
+      const { label, emoji } = describe(code, isDay);
+      return {
+        tempC,
+        tempF: Math.round((tempC * 9) / 5 + 32),
+        code,
+        label,
+        emoji,
+        isDay,
+      };
+    };
+  } catch {
+    return null;
+  }
+}
+
 // Local time string for a city's IANA timezone, e.g. "3:45 PM".
 export function localTime(timezone: string): string {
   return new Intl.DateTimeFormat("en-US", {
