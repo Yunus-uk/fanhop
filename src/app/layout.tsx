@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import Link from "next/link";
 import ServiceWorker from "./ServiceWorker";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -10,6 +11,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "FanHop — Soccer 2026 Fan Guide: Cities, Stadiums & Weather",
   description:
     "Your fan companion for the 2026 soccer tournament across the USA, Canada & Mexico. Host-city guides, stadium directions, live weather, local food and things to do between matches.",
@@ -17,6 +19,16 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "FanHop" },
   icons: { icon: "/icon.svg", apple: "/icon.svg" },
+  openGraph: {
+    type: "website",
+    siteName: "FanHop",
+    title: "FanHop — Soccer 2026 Fan Guide: Cities, Stadiums & Weather",
+    description:
+      "Host-city guides, match schedules with kickoff-time weather, stadium directions, food and things to do — for fans at the 2026 tournament in the USA, Canada & Mexico.",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export const viewport: Viewport = {
@@ -40,7 +52,17 @@ export default function RootLayout({
                 Fan<span className="text-emerald-400">Hop</span>
               </span>
             </Link>
-            <span className="text-xs text-emerald-300/70">USA · Canada · Mexico 2026</span>
+            <nav className="flex items-center gap-4">
+              <Link
+                href="/today"
+                className="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300 hover:bg-emerald-400/20"
+              >
+                📅 Today&apos;s matches
+              </Link>
+              <span className="hidden text-xs text-emerald-300/70 sm:inline">
+                USA · Canada · Mexico 2026
+              </span>
+            </nav>
           </div>
         </header>
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6">{children}</main>

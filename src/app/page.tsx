@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CityGrid from "./CityGrid";
 
 export default function Home() {
@@ -13,6 +14,18 @@ export default function Home() {
           actually need in each city — how to reach the stadium, live weather, the food fans rave
           about, and the best things to do between games.
         </p>
+        <Link
+          href="/today"
+          className="card mt-5 flex items-center justify-between gap-3 rounded-2xl p-4 text-left transition hover:border-emerald-400/40"
+        >
+          <div>
+            <p className="font-semibold">📅 What&apos;s on today?</p>
+            <p className="mt-0.5 text-sm text-white/60">
+              Today&apos;s matches, kickoff times and the weather at each stadium.
+            </p>
+          </div>
+          <span className="shrink-0 text-emerald-300">→</span>
+        </Link>
       </section>
 
       <CityGrid />
