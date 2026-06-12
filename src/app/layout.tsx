@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist } from "next/font/google";
 import Link from "next/link";
 import ServiceWorker from "./ServiceWorker";
@@ -72,6 +73,7 @@ export default function RootLayout({
             FIFA or the official tournament.
           </p>
         </footer>
+        <Analytics />
       </body>
     </html>
   );
