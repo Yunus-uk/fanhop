@@ -18,8 +18,8 @@ export async function generateMetadata({
   const city = getCity(id);
   if (!city) return { title: "City not found — FanHop" };
   return {
-    title: `${city.name} fan guide — stadium, weather & food | FanHop`,
-    description: `Visiting ${city.name} for the 2026 soccer tournament? ${city.stadium} directions, live weather, local food and the best things to do between matches.`,
+    title: `${city.name} fan guide — stadium, weather, food & where to watch | FanHop`,
+    description: `Visiting ${city.name} for the 2026 soccer tournament? ${city.stadium} directions, live weather, local food, where to watch the matches and the best things to do between games.`,
   };
 }
 
@@ -40,6 +40,25 @@ function Section({
   );
 }
 
+// Opens Google Maps searching for the place; from there the user gets
+// directions, transit and rideshare options for free.
+function PlaceLink({ name, area }: { name: string; area: string }) {
+  const href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    `${name}, ${area}`,
+  )}`;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="font-semibold hover:text-emerald-300"
+      title="Open in Google Maps for directions & transit"
+    >
+      {name} <span className="text-xs font-normal text-white/30">↗</span>
+    </a>
+  );
+}
+
 export default async function CityPage({
   params,
 }: {
@@ -49,6 +68,7 @@ export default async function CityPage({
   const city = getCity(id);
   if (!city) notFound();
 
+  const cityQuery = city.name.split("/")[0].trim();
   const weather = await getWeather(city.lat, city.lng);
   const time = localTime(city.timezone);
   const fixtures = await getCityFixtures(city.id);
@@ -96,7 +116,7 @@ export default async function CityPage({
 
       <Section title="🏟️ Getting to the stadium">
         <div className="card rounded-2xl p-4">
-          <p className="font-semibold">{city.stadium}</p>
+          <p><PlaceLink name={city.stadium} area={cityQuery} /></p>
           <p className="text-sm text-white/50">{city.stadiumArea}</p>
           <p className="mt-2 text-sm text-white/80">{city.gettingThere}</p>
         </div>
@@ -152,11 +172,38 @@ export default async function CityPage({
         </Section>
       )}
 
+      <Section title="📺 Where to watch">
+        <div className="card rounded-2xl border border-emerald-400/20 bg-emerald-400/5 p-4">
+          <p className="text-xs font-semibold uppercase tracking-wider text-emerald-300/80">
+            Fan gathering
+          </p>
+          <p className="mt-1 text-sm text-white/80">{city.watch.hub}</p>
+        </div>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          {city.watch.bars.map((b) => (
+            <div key={b.name} className="card rounded-2xl p-4">
+              <p><PlaceLink name={b.name} area={cityQuery} /></p>
+              <p className="mt-1 text-sm text-white/70">{b.note}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-2 text-xs text-white/30">
+          For matches you don&apos;t have tickets to. Bar moved or closed?{" "}
+          <a
+            href={`mailto:hello@fanhop.app?subject=${encodeURIComponent(`${city.name} — where to watch`)}`}
+            className="text-emerald-400/80 hover:text-emerald-300"
+          >
+            Let us know
+          </a>
+          .
+        </p>
+      </Section>
+
       <Section title="🍔 What to eat">
         <div className="grid gap-3 sm:grid-cols-2">
           {city.food.map((f) => (
             <div key={f.name} className="card rounded-2xl p-4">
-              <p className="font-semibold">{f.name}</p>
+              <p><PlaceLink name={f.name} area={cityQuery} /></p>
               <p className="mt-1 text-sm text-white/70">{f.note}</p>
             </div>
           ))}
@@ -167,7 +214,7 @@ export default async function CityPage({
         <div className="grid gap-3 sm:grid-cols-2">
           {city.doThis.map((d) => (
             <div key={d.name} className="card rounded-2xl p-4">
-              <p className="font-semibold">{d.name}</p>
+              <p><PlaceLink name={d.name} area={cityQuery} /></p>
               <p className="mt-1 text-sm text-white/70">{d.note}</p>
             </div>
           ))}

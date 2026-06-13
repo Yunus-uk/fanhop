@@ -24,6 +24,10 @@ export interface City {
   gettingThere: string; // how to reach the stadium on match day
   food: Pick[]; // what fans actually want to eat
   doThis: Pick[]; // best things to do in 24-48h
+  watch: {
+    hub: string; // the city's main public watch-party / fan-gathering area
+    bars: Pick[]; // go-to bars to catch the matches you don't have tickets for
+  };
 }
 
 export const CITIES: City[] = [
@@ -51,6 +55,14 @@ export const CITIES: City[] = [
       { name: "Georgia Aquarium", note: "One of the world's largest — great 2-hour break if the weather turns." },
       { name: "Ponce City Market", note: "Food, rooftop games and bars in a restored landmark; easy on the BeltLine." },
     ],
+    watch: {
+      hub: "Centennial Olympic Park downtown is the natural gathering point — central, free and right by the stadium for big-screen crowds.",
+      bars: [
+        { name: "Brewhouse Café (Little Five Points)", note: "Atlanta's original soccer bar — loud, packed and open early for European kickoffs." },
+        { name: "Fadó Irish Pub (Buckhead)", note: "Long-running pub that opens for early matches with every game on screen." },
+        { name: "Park Bar (downtown)", note: "Right by Centennial Park — handy for a pre- or post-match pint near the stadium." },
+      ],
+    },
   },
   {
     id: "boston",
@@ -76,6 +88,14 @@ export const CITIES: City[] = [
       { name: "Fenway Park area", note: "Even without a game, the Fenway neighborhood bars are a great pre-match scene." },
       { name: "Harvard & Cambridge", note: "Quick T ride across the river for the classic college-town wander." },
     ],
+    watch: {
+      hub: "Downtown — Boston Common and City Hall Plaza are the usual spots for public screenings, with the bar scene around Faneuil Hall and Fenway.",
+      bars: [
+        { name: "The Banshee (Dorchester)", note: "Boston's definitive football pub — rammed for big games, every league on." },
+        { name: "Phoenix Landing (Cambridge)", note: "Long-time soccer bar across the river, a Liverpool-supporter favorite." },
+        { name: "Lansdowne Pub (Fenway)", note: "Big Irish pub by Fenway with plenty of screens and a lively crowd." },
+      ],
+    },
   },
   {
     id: "dallas",
@@ -101,6 +121,14 @@ export const CITIES: City[] = [
       { name: "Dallas Arts District", note: "Walkable museums and the JFK Sixth Floor Museum nearby." },
       { name: "Deep Ellum", note: "Murals, live music and bars — the best evening neighborhood." },
     ],
+    watch: {
+      hub: "Arlington's stadium plaza fills on match days; for screens, head to Dallas's Uptown and Deep Ellum bar districts.",
+      bars: [
+        { name: "The Londoner (Addison, Colleyville & Mockingbird)", note: "Voted a top US pub for Premier League — the DFW soccer staple, opens early for kickoffs." },
+        { name: "The Dubliner (Greenville Ave)", note: "Dallas's longest-running Irish pub — small, packed and loud whenever there's a match on." },
+        { name: "Harwood Arms (Uptown)", note: "Official home of the local Chelsea and Bayern Munich supporters' clubs." },
+      ],
+    },
   },
   {
     id: "houston",
@@ -126,6 +154,14 @@ export const CITIES: City[] = [
       { name: "Museum District", note: "Many free museums clustered together, walkable from the rail line." },
       { name: "Buffalo Bayou Park", note: "Kayaks, trails and skyline views right by downtown." },
     ],
+    watch: {
+      hub: "Downtown's Discovery Green hosts large public events and screenings; the EaDo district is the bar hub near the stadiums.",
+      bars: [
+        { name: "The Pitch 25 (EaDo)", note: "Soccer-first beer hall built around the global game — the obvious choice." },
+        { name: "Lucky's Pub (EaDo)", note: "Big patio sports bar near the stadiums, packed for soccer." },
+        { name: "Little Woodrow's", note: "Local sports-bar chain that shows every match across the city." },
+      ],
+    },
   },
   {
     id: "kansas-city",
@@ -151,6 +187,14 @@ export const CITIES: City[] = [
       { name: "Nelson-Atkins Museum", note: "World-class and free, with the giant shuttlecock lawn." },
       { name: "Country Club Plaza", note: "Spanish-style shopping/dining district, great for an evening stroll." },
     ],
+    watch: {
+      hub: "The Power & Light District downtown is KC's open-air entertainment block — big screens and the natural watch-party hub.",
+      bars: [
+        { name: "No Other Pub (Power & Light)", note: "Sporting KC's own bar — the city's soccer headquarters." },
+        { name: "Tanner's Bar & Grill", note: "Classic KC sports-bar chain with matches on every screen." },
+        { name: "Browne's Irish Marketplace", note: "Oldest Irish business in the US — a cozy spot for early kickoffs." },
+      ],
+    },
   },
   {
     id: "los-angeles",
@@ -176,6 +220,14 @@ export const CITIES: City[] = [
       { name: "Griffith Observatory", note: "Best free Hollywood-sign and skyline view in the city." },
       { name: "The Getty", note: "Free world-class art with a hilltop view (parking reservation needed)." },
     ],
+    watch: {
+      hub: "Watch parties cluster in Downtown LA and Santa Monica; expect big-screen events near the stadium in Inglewood too.",
+      bars: [
+        { name: "Ye Olde King's Head (Santa Monica)", note: "Institution English pub — opens early for European matches." },
+        { name: "The Greyhound Bar & Grill (Highland Park)", note: "Beloved neighborhood soccer bar with a real match-day crowd." },
+        { name: "Tom Bergin's (Fairfax)", note: "Historic tavern that pulls a serious soccer following." },
+      ],
+    },
   },
   {
     id: "miami",
@@ -201,6 +253,14 @@ export const CITIES: City[] = [
       { name: "Wynwood Walls", note: "Open-air street-art district packed with bars and food." },
       { name: "Little Havana", note: "Live music, mojitos and the best people-watching in the city." },
     ],
+    watch: {
+      hub: "Bayfront Park downtown and Brickell's riverfront bars host the crowds; Little Havana erupts for any Latin American side.",
+      bars: [
+        { name: "Fritz & Franz Bierhaus (Coral Gables)", note: "German beer hall and Miami's long-standing go-to football bar." },
+        { name: "American Social (Brickell)", note: "Riverfront sports bar with big screens and a downtown crowd." },
+        { name: "Duffy's Sports Grill", note: "Florida sports-bar chain that shows every match — reliable and everywhere." },
+      ],
+    },
   },
   {
     id: "new-york",
@@ -226,6 +286,14 @@ export const CITIES: City[] = [
       { name: "Statue of Liberty / Staten Island Ferry", note: "The ferry is free and passes the statue and skyline." },
       { name: "Brooklyn (DUMBO)", note: "Best skyline photo and a great evening neighborhood across the bridge." },
     ],
+    watch: {
+      hub: "Manhattan overflows with watch parties; supporters' clubs for nearly every nation have a regular bar in the city.",
+      bars: [
+        { name: "The Football Factory at Legends (near Times Square)", note: "NYC's most famous dedicated soccer bar and supporters'-club home base." },
+        { name: "Smithfield Hall (NoMad)", note: "Huge multi-screen sports hall — every match, every time." },
+        { name: "Banter (Williamsburg, Brooklyn)", note: "Aussie-run soccer institution and official NYCFC pub partner — 24 taps and a packed match-day crowd." },
+      ],
+    },
   },
   {
     id: "philadelphia",
@@ -251,6 +319,14 @@ export const CITIES: City[] = [
       { name: "Rocky Steps (Art Museum)", note: "Run the steps, snap the statue — obligatory and free." },
       { name: "Italian Market", note: "America's oldest outdoor market — great for a food-led wander." },
     ],
+    watch: {
+      hub: "Center City has the bar density; the South Philly sports complex around the stadium fills on match days.",
+      bars: [
+        { name: "Misconduct Tavern (Center City)", note: "Arsenal Philadelphia's home bar — screens everywhere and a soccer-first crowd." },
+        { name: "Cavanaugh's Headhouse", note: "Home of the local Liverpool and Newcastle supporters' clubs." },
+        { name: "Fadó Irish Pub (Center City)", note: "Neutral ground for all supporters at 15th & Locust; opens early for big internationals." },
+      ],
+    },
   },
   {
     id: "bay-area",
@@ -276,6 +352,14 @@ export const CITIES: City[] = [
       { name: "Alcatraz", note: "Book ahead; the island prison tour is the city's top experience." },
       { name: "Stanford / Palo Alto", note: "Near the stadium — leafy campus and easy Valley exploring." },
     ],
+    watch: {
+      hub: "San Francisco's pubs draw the biggest crowds; San Jose has the closest bars to Levi's Stadium for match day.",
+      bars: [
+        { name: "Kezar Pub (SF, Haight)", note: "A San Francisco soccer cornerstone since 1936 — packed for big matches." },
+        { name: "Britannia Arms (San Jose)", note: "South Bay British pub that opens for kickoffs — the closest soccer crowd to the stadium." },
+        { name: "Danny Coyle's (SF, Haight)", note: "Irish pub that opens early for European kickoffs." },
+      ],
+    },
   },
   {
     id: "seattle",
@@ -301,6 +385,14 @@ export const CITIES: City[] = [
       { name: "Pike Place & waterfront", note: "Market, ferris wheel and ferries — a full easy day downtown." },
       { name: "Ferry to Bainbridge Island", note: "Cheap walk-on ferry with the best Seattle skyline view from the water." },
     ],
+    watch: {
+      hub: "Seattle Center and downtown host public screenings; this Sounders city goes all-in on match days.",
+      bars: [
+        { name: "The George & Dragon Pub (Fremont)", note: "Seattle's iconic soccer pub — rammed from the earliest kickoffs." },
+        { name: "Golden Roosters (Pioneer Square)", note: "Big-screen soccer bar a short walk from the stadium — every match on." },
+        { name: "The Atlantic Crossing (Green Lake)", note: "Long-running English-style soccer pub, now in a bigger Green Lake space." },
+      ],
+    },
   },
   {
     id: "toronto",
@@ -326,6 +418,14 @@ export const CITIES: City[] = [
       { name: "Toronto Islands", note: "Short ferry to car-free islands with the best skyline view and beaches." },
       { name: "Distillery District", note: "Cobblestone Victorian district full of patios, galleries and bars." },
     ],
+    watch: {
+      hub: "Maple Leaf Square downtown and Exhibition Place by the stadium draw big-screen crowds in one of the world's most diverse fan cities.",
+      bars: [
+        { name: "The Football Factory (Liberty Village)", note: "Toronto's dedicated soccer bar — a sea of red TFC jerseys, opens early for European games." },
+        { name: "Brazen Head (Liberty Village)", note: "Multi-level Irish pub near the stadium that draws a big soccer crowd." },
+        { name: "The Madison Avenue Pub", note: "Huge multi-floor pub that fills up for big matches." },
+      ],
+    },
   },
   {
     id: "vancouver",
@@ -351,6 +451,14 @@ export const CITIES: City[] = [
       { name: "Capilano Suspension Bridge", note: "Treetop walkways over a canyon, just north of downtown." },
       { name: "Granville Island", note: "Market, breweries and buskers — an easy half-day by mini-ferry." },
     ],
+    watch: {
+      hub: "Downtown Vancouver around BC Place is walkable and bar-dense — the easiest host city to find a screen near the ground.",
+      bars: [
+        { name: "The Pint Public House (near BC Place)", note: "A 4-minute walk from BC Place — the city's go-to FIFA pub on match day." },
+        { name: "Library Square Public House (downtown)", note: "Roomy downtown pub with plenty of screens." },
+        { name: "Mahony & Sons (waterfront)", note: "Popular spot to catch matches with a view of the water." },
+      ],
+    },
   },
   {
     id: "guadalajara",
@@ -376,6 +484,14 @@ export const CITIES: City[] = [
       { name: "Centro Histórico & Cathedral", note: "Plazas, the Hospicio Cabañas murals and mariachi in Plaza de los Mariachis." },
       { name: "Tlaquepaque", note: "Artisan town within the metro — crafts, courtyards and mezcal." },
     ],
+    watch: {
+      hub: "Fans pour onto the Minerva roundabout to celebrate Mexico's wins; Colonia Americana around Avenida Chapultepec is the bar-crawl heart, with cantinas and plazas screening every match.",
+      bars: [
+        { name: "Cervecería Chapultepec (Colonia Americana)", note: "Anchor of the Av. Chapultepec strip — cheap beer and soccer on most screens." },
+        { name: "Señor Stone (Colonia Americana)", note: "Classic sports bar just off Chapultepec with plenty of screens and bar food." },
+        { name: "Centro Histórico cantinas", note: "Traditional bars near the cathedral show the games with a local crowd." },
+      ],
+    },
   },
   {
     id: "mexico-city",
@@ -401,6 +517,14 @@ export const CITIES: City[] = [
       { name: "Centro Histórico & Zócalo", note: "Templo Mayor, the cathedral and the giant main square." },
       { name: "Coyoacán & Frida Kahlo Museum", note: "Cobbled streets, the Blue House and great markets in the south." },
     ],
+    watch: {
+      hub: "El Ángel de la Independencia on Reforma is where the whole city erupts to celebrate Mexico's wins — the iconic gathering point.",
+      bars: [
+        { name: "Condesa & Roma", note: "Trendy neighbourhoods packed with bars screening every match." },
+        { name: "Centro Histórico cantinas", note: "Historic bars near the Zócalo show the games with a passionate crowd." },
+        { name: "Zona Rosa sports bars", note: "Lively district full of screens, walkable from the Ángel." },
+      ],
+    },
   },
   {
     id: "monterrey",
@@ -426,6 +550,14 @@ export const CITIES: City[] = [
       { name: "Chipinque / Cerro de la Silla", note: "Cable car and trails into the mountains that ring the city." },
       { name: "Grutas de García", note: "Cable-car cave system a short trip out — a great hot-day escape." },
     ],
+    watch: {
+      hub: "Barrio Antiguo and the Macroplaza downtown fill with fans on match days — the heart of the city's watch-party scene.",
+      bars: [
+        { name: "Mulligan's (Barrio Antiguo)", note: "Popular upscale sports bar — long food menu and every match on screen." },
+        { name: "Barrio Antiguo", note: "Old-town strip of rooftop bars and cantinas with an international fan vibe at night." },
+        { name: "San Pedro Garza García", note: "Upscale district where bars and late-night spots run well past midnight." },
+      ],
+    },
   },
 ];
 
