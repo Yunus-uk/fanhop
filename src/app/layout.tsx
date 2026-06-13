@@ -68,6 +68,15 @@ export default function RootLayout({
         </header>
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6">{children}</main>
         <footer className="border-t border-white/10 px-4 py-6 text-center text-xs text-white/40">
+          <p className="mb-2">
+            Spotted a wrong detail or have a tip?{" "}
+            <a
+              href="mailto:hello@fanhop.app?subject=FanHop%20feedback"
+              className="font-semibold text-emerald-400 hover:text-emerald-300"
+            >
+              Send feedback
+            </a>
+          </p>
           <p>
             FanHop is an independent fan guide. Not affiliated with, endorsed by, or connected to
             FIFA or the official tournament.
