@@ -40,21 +40,36 @@ function Section({
   );
 }
 
-// Opens Google Maps searching for the place; from there the user gets
-// directions, transit and rideshare options for free.
-function PlaceLink({ name, area }: { name: string; area: string }) {
-  const href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+// Builds a Google Maps search URL; from there the user gets directions,
+// transit and rideshare options for free.
+function mapsHref(name: string, area: string) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     `${name}, ${area}`,
   )}`;
+}
+
+// A whole card that links to Google Maps — the entire box is tappable.
+function PlaceCard({
+  name,
+  note,
+  area,
+}: {
+  name: string;
+  note: string;
+  area: string;
+}) {
   return (
     <a
-      href={href}
+      href={mapsHref(name, area)}
       target="_blank"
       rel="noopener noreferrer"
-      className="font-semibold hover:text-emerald-300"
+      className="card group block rounded-2xl p-4 transition hover:border-emerald-400/40 hover:bg-emerald-400/5"
       title="Open in Google Maps for directions & transit"
     >
-      {name} <span className="text-xs font-normal text-white/30">↗</span>
+      <p className="font-semibold group-hover:text-emerald-300">
+        {name} <span className="text-xs font-normal text-white/30">↗</span>
+      </p>
+      <p className="mt-1 text-sm text-white/70">{note}</p>
     </a>
   );
 }
@@ -115,11 +130,19 @@ export default async function CityPage({
       <p className="mt-4 text-white/80">{city.blurb}</p>
 
       <Section title="🏟️ Getting to the stadium">
-        <div className="card rounded-2xl p-4">
-          <p><PlaceLink name={city.stadium} area={cityQuery} /></p>
+        <a
+          href={mapsHref(city.stadium, cityQuery)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="card group block rounded-2xl p-4 transition hover:border-emerald-400/40 hover:bg-emerald-400/5"
+          title="Open in Google Maps for directions & transit"
+        >
+          <p className="font-semibold group-hover:text-emerald-300">
+            {city.stadium} <span className="text-xs font-normal text-white/30">↗</span>
+          </p>
           <p className="text-sm text-white/50">{city.stadiumArea}</p>
           <p className="mt-2 text-sm text-white/80">{city.gettingThere}</p>
-        </div>
+        </a>
       </Section>
 
       {fixtures.length > 0 && (
@@ -181,10 +204,7 @@ export default async function CityPage({
         </div>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           {city.watch.bars.map((b) => (
-            <div key={b.name} className="card rounded-2xl p-4">
-              <p><PlaceLink name={b.name} area={cityQuery} /></p>
-              <p className="mt-1 text-sm text-white/70">{b.note}</p>
-            </div>
+            <PlaceCard key={b.name} name={b.name} note={b.note} area={cityQuery} />
           ))}
         </div>
         <p className="mt-2 text-xs text-white/30">
@@ -202,10 +222,7 @@ export default async function CityPage({
       <Section title="🍔 What to eat">
         <div className="grid gap-3 sm:grid-cols-2">
           {city.food.map((f) => (
-            <div key={f.name} className="card rounded-2xl p-4">
-              <p><PlaceLink name={f.name} area={cityQuery} /></p>
-              <p className="mt-1 text-sm text-white/70">{f.note}</p>
-            </div>
+            <PlaceCard key={f.name} name={f.name} note={f.note} area={cityQuery} />
           ))}
         </div>
       </Section>
@@ -213,10 +230,7 @@ export default async function CityPage({
       <Section title="📍 Best things to do between matches">
         <div className="grid gap-3 sm:grid-cols-2">
           {city.doThis.map((d) => (
-            <div key={d.name} className="card rounded-2xl p-4">
-              <p><PlaceLink name={d.name} area={cityQuery} /></p>
-              <p className="mt-1 text-sm text-white/70">{d.note}</p>
-            </div>
+            <PlaceCard key={d.name} name={d.name} note={d.note} area={cityQuery} />
           ))}
         </div>
       </Section>
