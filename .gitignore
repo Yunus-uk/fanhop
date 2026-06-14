@@ -42,3 +42,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# android / twa — never commit signing keys or build output
+*.keystore
+*.jks
+twa/app-release-*.aab
+twa/app-release-*.apk
+twa/*.idsig
