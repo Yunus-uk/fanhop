@@ -421,7 +421,7 @@ export const CITIES: City[] = [
     watch: {
       hub: "Maple Leaf Square downtown and Exhibition Place by the stadium draw big-screen crowds in one of the world's most diverse fan cities.",
       bars: [
-        { name: "The Football Factory (Liberty Village)", note: "Toronto's dedicated soccer bar — a sea of red TFC jerseys, opens early for European games." },
+        { name: "Real Sports Bar & Grill (downtown)", note: "Cavernous sports bar by Scotiabank Arena — 200 screens and a 39-foot wall, one of the best big-match venues in the country." },
         { name: "Brazen Head (Liberty Village)", note: "Multi-level Irish pub near the stadium that draws a big soccer crowd." },
         { name: "The Madison Avenue Pub", note: "Huge multi-floor pub that fills up for big matches." },
       ],

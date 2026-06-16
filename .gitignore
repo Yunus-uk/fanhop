@@ -49,3 +49,6 @@ next-env.d.ts
 twa/app-release-*.aab
 twa/app-release-*.apk
 twa/*.idsig
+
+# outreach working data — not for the public repo
+venue-outreach.csv
